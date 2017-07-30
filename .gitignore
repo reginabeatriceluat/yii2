@@ -1,3 +1,6 @@
+#TEMPORARILY IGNORE BOWER COMPONENTS
+bower_components/
+
 # yii console commands
 /yii
 /yii_test
