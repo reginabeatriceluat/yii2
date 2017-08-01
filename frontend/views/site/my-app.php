@@ -70,6 +70,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       app-header {
         color: var(--text-primary-color);
         background-color: var(--dark-primary-color);
+        margin-top: 150px;
       }
 
       app-header paper-icon-button {
@@ -140,12 +141,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: none !important;
       }
     </style>
-    <app-location route="{{route}}"></app-location>
-    <app-route
+    <!-- <app-location route="{{route}}"></app-location> -->
+    <!-- <app-route
         route="{{route}}"
         pattern="/yii2/frontend/web/:page"
         data="{{routeData}}"
-        tail="{{subroute}}"></app-route>
+        tail="{{subroute}}"></app-route> -->
 
     <app-drawer-layout fullbleed force-narrow>
       <!-- Drawer content -->
@@ -178,11 +179,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 }
               </style>
               <paper-tabs selected="[[page]]" attr-for-selected="name" hidden$="{{!wideLayout}}">
-                <paper-tab link name="home"><a href="frontend/web/home" class="link">home</a></paper-tab>
+                <!-- <paper-tab link name="home"><a href="frontend/web/home" class="link">home</a></paper-tab>
                 <paper-tab link name="tournament"><a href="frontend/web/tournament" class="link">tournament</a></paper-tab>
                 <paper-tab link name="history"><a href="frontend/web/history" class="link">history</a></paper-tab>
                 <paper-tab link name="gallery"><a href="frontend/web/gallery" class="link">gallery</a></paper-tab>
-                <paper-tab link name="about"><a href="frontend/web/about" class="link">about</a></paper-tab>
+                <paper-tab link name="about"><a href="frontend/web/about" class="link">about</a></paper-tab> -->
+                <paper-tab link name="about"><a href="/yii2/frontend/web/about" class="link">About</a></paper-tab>
+                <paper-tab link name="contact"><a href="/yii2/frontend/web/contact" class="link">Contact</a></paper-tab>
+                <?php if ("{{details}}" == true): ?>
+                  <paper-tab link name="signup"><a href="/yii2/frontend/web/signup" class="link">Signup</a></paper-tab>
+                  <paper-tab link name="login"><a href="/yii2/frontend/web/login" class="link">Login</a></paper-tab>
+                <?php else: ?>
+                  <paper-tab link name="logout"><a href="/yii2/frontend/web/logout" class="link">Logout</a></paper-tab>
+                <?php endif; ?>
               </paper-tabs>
           </app-toolbar>
         </app-header>
@@ -203,13 +212,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           }
           /*<paper-icon-button icon="favorite" title="heart">*/
         </style>
-          <l2t-paper-slider total-slides="4">
+          <!-- <l2t-paper-slider total-slides="4">
             <paper-slide style="background-image: url('frontend/web/images/cheerup.jpg');"></paper-slide>
             <paper-slide style="background-image: url('frontend/web/images/cheerup.jpg');"></paper-slide>
             <paper-slide style="background-image: url('frontend/web/images/pro1.jpg')"></paper-slide>
             <paper-slide style="background-image: url('frontend/web/images/cheerup1.jpg')"></paper-slide>
           </l2t-paper-slider>
-        <iron-pages
+        -->
+        <!-- <iron-pages
             selected="[[page]]"
             attr-for-selected="name"
             fallback-selection="view404"
@@ -220,10 +230,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <my-gallery name="gallery"></my-gallery>
           <my-about name="about"></my-about>
           <my-view404 name="view404"></my-view404>
-        </iron-pages>
+        </iron-pages> -->
       </app-header-layout>
     </app-drawer-layout>
-
+    <?php echo '<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />';
+    echo gettype('{{details}}');
+    echo '<br />';
+    echo ('{{details}}'); ?>
     <iron-media-query query="min-width: 600px" query-matches="{{wideLayout}}"></iron-media-query>
     </template>
     <script>
@@ -245,6 +258,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               type: Boolean,
               value: false,
               observer: 'onLayoutChange',
+            },
+            details: {
+              type: Boolean,
+              observer
             },
           };
         }
@@ -268,22 +285,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             drawer.close();
           }
         }
-        _routePageChanged(page) {
-          // Polymer 2.0 will call with `undefined` on initialization.
-          // Ignore until we are properly called with a string.
-          if (page === undefined) {
-            return;
-          }
-
-          // If no page was found in the route data, page will be an empty string.
-          // Deault to 'home' in that case.
-          this.page = page || 'home';
-
-          // Close a non-persistent drawer when the page & route are changed.
-          if (!this.$.drawer.persistent) {
-            this.$.drawer.close();
-          }
-        }
+        // _routePageChanged(page) {
+        //   // Polymer 2.0 will call with `undefined` on initialization.
+        //   // Ignore until we are properly called with a string.
+        //   if (page === undefined) {
+        //     return;
+        //   }
+        //
+        //   // If no page was found in the route data, page will be an empty string.
+        //   // Deault to 'home' in that case.
+        //   this.page = page || 'home';
+        //
+        //   // Close a non-persistent drawer when the page & route are changed.
+        //   if (!this.$.drawer.persistent) {
+        //     this.$.drawer.close();
+        //   }
+        // }
 
         _pageChanged(page) {
           // Load page import on demand. Show 404 page if fails
