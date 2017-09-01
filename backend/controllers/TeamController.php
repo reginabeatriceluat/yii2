@@ -65,7 +65,16 @@ class TeamController extends Controller
     {
         $model = new Team();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            $model->team_status_id = 1;
+            $model->champ = 0;
+            $model->first = 0;
+            $model->second = 0;
+            $model->wins = 0;
+            $model->draws = 0;
+            $model->losses = 0;
+            $model->last_played = NULL;
+            $model->save();
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
