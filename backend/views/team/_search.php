@@ -25,21 +25,21 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'champ') ?>
 
-    <?php // echo $form->field($model, 'first') ?>
+    <?= $form->field($model, 'first') ?>
 
-    <?php // echo $form->field($model, 'second') ?>
+    <?= $form->field($model, 'second') ?>
 
-    <?php // echo $form->field($model, 'wins') ?>
+    <?= $form->field($model, 'wins') ?>
 
-    <?php // echo $form->field($model, 'draws') ?>
+    <?= $form->field($model, 'draws') ?>
 
-    <?php // echo $form->field($model, 'losses') ?>
+    <?= $form->field($model, 'losses') ?>
 
-    <?php // echo $form->field($model, 'rating') ?>
+    <?= $form->field($model, 'rating') ?>
 
-    <?php // echo $form->field($model, 'since') ?>
+    <?= $form->field($model, 'since') ?>
 
-    <?php // echo $form->field($model, 'last_played') ?>
+    <?= $form->field($model, 'last_played') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
