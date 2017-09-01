@@ -23,9 +23,17 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'team_status_id') ?>
 
-    <?= $form->field($model, 'champ_first_second') ?>
+    <?= $form->field($model, 'champ') ?>
 
-    <?php // echo $form->field($model, 'win_draw_loss') ?>
+    <?php // echo $form->field($model, 'first') ?>
+
+    <?php // echo $form->field($model, 'second') ?>
+
+    <?php // echo $form->field($model, 'wins') ?>
+
+    <?php // echo $form->field($model, 'draws') ?>
+
+    <?php // echo $form->field($model, 'losses') ?>
 
     <?php // echo $form->field($model, 'rating') ?>
 

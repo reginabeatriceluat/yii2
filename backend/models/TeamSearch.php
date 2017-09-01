@@ -18,8 +18,8 @@ class TeamSearch extends Team
     public function rules()
     {
         return [
-            [['id', 'event_type_id', 'team_status_id', 'rating'], 'integer'],
-            [['team', 'champ_first_second', 'win_draw_loss', 'since', 'last_played'], 'safe'],
+            [['id', 'event_type_id', 'team_status_id', 'champ', 'first', 'second', 'wins', 'draws', 'losses', 'rating'], 'integer'],
+            [['team', 'since', 'last_played'], 'safe'],
         ];
     }
 
@@ -62,14 +62,18 @@ class TeamSearch extends Team
             'id' => $this->id,
             'event_type_id' => $this->event_type_id,
             'team_status_id' => $this->team_status_id,
+            'champ' => $this->champ,
+            'first' => $this->first,
+            'second' => $this->second,
+            'wins' => $this->wins,
+            'draws' => $this->draws,
+            'losses' => $this->losses,
             'rating' => $this->rating,
             'since' => $this->since,
             'last_played' => $this->last_played,
         ]);
 
-        $query->andFilterWhere(['like', 'team', $this->team])
-            ->andFilterWhere(['like', 'champ_first_second', $this->champ_first_second])
-            ->andFilterWhere(['like', 'win_draw_loss', $this->win_draw_loss]);
+        $query->andFilterWhere(['like', 'team', $this->team]);
 
         return $dataProvider;
     }

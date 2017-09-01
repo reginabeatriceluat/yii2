@@ -11,8 +11,12 @@ use Yii;
  * @property string $team
  * @property int $event_type_id
  * @property int $team_status_id
- * @property string $champ_first_second
- * @property string $win_draw_loss
+ * @property int $champ
+ * @property int $first
+ * @property int $second
+ * @property int $wins
+ * @property int $draws
+ * @property int $losses
  * @property int $rating
  * @property string $since
  * @property string $last_played
@@ -38,11 +42,10 @@ class Team extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['team', 'event_type_id', 'team_status_id', 'champ_first_second', 'win_draw_loss', 'since'], 'required'],
-            [['event_type_id', 'team_status_id', 'rating'], 'integer'],
+            [['team', 'event_type_id', 'team_status_id', 'champ', 'first', 'second', 'wins', 'draws', 'losses', 'since'], 'required'],
+            [['event_type_id', 'team_status_id', 'champ', 'first', 'second', 'wins', 'draws', 'losses', 'rating'], 'integer'],
             [['since', 'last_played'], 'safe'],
             [['team'], 'string', 'max' => 25],
-            [['champ_first_second', 'win_draw_loss'], 'string', 'max' => 100],
             [['team'], 'unique'],
             [['event_type_id'], 'exist', 'skipOnError' => true, 'targetClass' => EventType::className(), 'targetAttribute' => ['event_type_id' => 'id']],
             [['team_status_id'], 'exist', 'skipOnError' => true, 'targetClass' => TeamStatus::className(), 'targetAttribute' => ['team_status_id' => 'id']],
@@ -59,8 +62,12 @@ class Team extends \yii\db\ActiveRecord
             'team' => 'Team',
             'event_type_id' => 'Event Type ID',
             'team_status_id' => 'Team Status ID',
-            'champ_first_second' => 'Champ First Second',
-            'win_draw_loss' => 'Win Draw Loss',
+            'champ' => 'Champ',
+            'first' => 'First',
+            'second' => 'Second',
+            'wins' => 'Wins',
+            'draws' => 'Draws',
+            'losses' => 'Losses',
             'rating' => 'Rating',
             'since' => 'Since',
             'last_played' => 'Last Played',

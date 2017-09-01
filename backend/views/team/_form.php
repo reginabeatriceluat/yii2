@@ -18,9 +18,17 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'team_status_id')->textInput() ?>
 
-    <?= $form->field($model, 'champ_first_second')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'champ')->textInput() ?>
 
-    <?= $form->field($model, 'win_draw_loss')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'first')->textInput() ?>
+
+    <?= $form->field($model, 'second')->textInput() ?>
+
+    <?= $form->field($model, 'wins')->textInput() ?>
+
+    <?= $form->field($model, 'draws')->textInput() ?>
+
+    <?= $form->field($model, 'losses')->textInput() ?>
 
     <?= $form->field($model, 'rating')->textInput() ?>
 
