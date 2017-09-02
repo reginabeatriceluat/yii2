@@ -17,7 +17,7 @@ use common\models\EventType;
     <?= $form->field($model, 'team')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'event_type_id')->dropDownList(
-        ArrayHelper::map(EventType::find()->all(),'id','type'),
+        ArrayHelper::map(EventType::find()->orderBy('id')->all(),'id','type'),
         ['prompt'=>'-- Select Event --']
     ) ?>
 
