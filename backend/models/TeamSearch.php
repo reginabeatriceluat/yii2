@@ -18,8 +18,8 @@ class TeamSearch extends Team
     public function rules()
     {
         return [
-            [['id', 'event_type_id', 'team_status_id', 'champ', 'first', 'second', 'wins', 'draws', 'losses', 'rating'], 'integer'],
-            [['team', 'since', 'last_played'], 'safe'],
+            [['id', 'champ', 'first', 'second', 'wins', 'draws', 'losses', 'rating'], 'integer'],
+            [['team', 'since', 'last_played', 'event_type_id', 'team_status_id'], 'safe'],
         ];
     }
 
@@ -57,11 +57,14 @@ class TeamSearch extends Team
             return $dataProvider;
         }
 
+        $query->joinWith('eventType');
+        $query->joinWith('teamStatus');
+
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'event_type_id' => $this->event_type_id,
-            'team_status_id' => $this->team_status_id,
+            // 'event_type_id' => $this->event_type_id,
+            // 'team_status_id' => $this->team_status_id,
             'champ' => $this->champ,
             'first' => $this->first,
             'second' => $this->second,
@@ -73,7 +76,9 @@ class TeamSearch extends Team
             'last_played' => $this->last_played,
         ]);
 
-        $query->andFilterWhere(['like', 'team', $this->team]);
+        $query->andFilterWhere(['like', 'team', $this->team])
+              ->andFilterWhere(['like', 'event_type.type', $this->event_type_id])
+              ->andFilterWhere(['=', 'team_status.status', $this->team_status_id]);
 
         return $dataProvider;
     }
