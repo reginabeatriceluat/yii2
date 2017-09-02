@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
 use common\models\EventType;
+use kartik\select2\Select2;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Team */
@@ -16,10 +17,14 @@ use common\models\EventType;
 
     <?= $form->field($model, 'team' )->textInput(['maxlength' => true, 'placeholder' => "Enter Team Name"]) ?>
 
-    <?= $form->field($model, 'event_type_id')->dropDownList(
-        ArrayHelper::map(EventType::find()->orderBy('id')->all(),'id','type'),
-        ['prompt'=>'-- Select Event --']
-    )->label('Event')
+    <?= $form->field($model, 'event_type_id')->widget(Select2::classname(), [
+        'data' => ArrayHelper::map(EventType::find()->orderBy('id')->all(),'id','type'),
+        'language' => 'en',
+        'options' => ['placeholder' => 'Select an Event'],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]);
     ?>
 
     <?php //echo $form->field($model, 'team_status_id')->textInput() ?>
