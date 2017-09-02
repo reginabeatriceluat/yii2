@@ -18,8 +18,8 @@ class PlayerSearch extends Player
     public function rules()
     {
         return [
-            [['id', 'gender_id', 'team_id'], 'integer'],
-            [['name'], 'safe'],
+            [['id'], 'integer'],
+            [['name', 'gender_id', 'team_id'], 'safe'],
         ];
     }
 
@@ -57,14 +57,19 @@ class PlayerSearch extends Player
             return $dataProvider;
         }
 
+        $query->joinWith('gender');
+        $query->joinWith('team');
+
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'gender_id' => $this->gender_id,
-            'team_id' => $this->team_id,
+            // 'gender_id' => $this->gender_id,
+            // 'team_id' => $this->team_id,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name]);
+        $query->andFilterWhere(['like', 'name', $this->name])
+              ->andFilterWhere(['=', 'gender.gender', $this->gender_id])
+              ->andFilterWhere(['like', 'team.team', $this->team_id]);
 
         return $dataProvider;
     }
