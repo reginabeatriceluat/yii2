@@ -69,7 +69,7 @@ class Team extends \yii\db\ActiveRecord
             'draws' => 'Draws',
             'losses' => 'Losses',
             'rating' => 'Rating',
-            'since' => 'Founded Since',
+            'since' => 'Since',
             'last_played' => 'Last Played',
         ];
     }

@@ -14,12 +14,13 @@ use common\models\EventType;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'team')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'team' )->textInput(['maxlength' => true, 'placeholder' => "Enter Team Name"]) ?>
 
     <?= $form->field($model, 'event_type_id')->dropDownList(
         ArrayHelper::map(EventType::find()->orderBy('id')->all(),'id','type'),
         ['prompt'=>'-- Select Event --']
-    ) ?>
+    )->label('Event')
+    ?>
 
     <?php //echo $form->field($model, 'team_status_id')->textInput() ?>
 
@@ -37,7 +38,7 @@ use common\models\EventType;
 
     <?php //echo $form->field($model, 'rating')->textInput() ?>
 
-    <?= $form->field($model, 'since')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'since')->textInput(['maxlength' => true, 'placeholder' => "e.g. 2017"])->label('Year Founded') ?>
 
     <?php //$form->field($model, 'last_played')->textInput(['maxlength' => true]) ?>
 
