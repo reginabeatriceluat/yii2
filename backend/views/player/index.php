@@ -33,12 +33,12 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'label' => 'Team',
                 'attribute' => 'team_name',
-                'value' => 'teamEvent.team.team'
+                'value' => 'team.team'
             ],
             [
                 'label' => 'Event Type',
                 'attribute' => 'event_type_name',
-                'value' => 'teamEvent.eventType.type'
+                'value' => 'eventType.type'
             ],
 
             ['class' => 'yii\grid\ActionColumn'],

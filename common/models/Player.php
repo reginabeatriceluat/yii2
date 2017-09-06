@@ -71,11 +71,13 @@ class Player extends \yii\db\ActiveRecord
     public function getTeam()
     {
 
-        return $this->hasOne(Team::className(), ['id' => 'team_event_id']);
+        return $this->hasOne(Team::className(), ['id' => 'team_id'])
+                    ->via('teamEvent');
     }
 
     public function getEventType()
     {
-        return $this->hasOne(EventType::className(), ['id' => 'team_event_id']);
+        return $this->hasOne(EventType::className(), ['id' => 'event_type_id'])
+                    ->via('teamEvent');
     }
 }

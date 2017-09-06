@@ -49,7 +49,6 @@ class PlayerSearch extends Player
         // add conditions that should always apply here
 
         $query->joinWith('gender');
-        $query->joinWith('teamEvent');
         $query->joinWith('team');
         $query->joinWith('eventType');
 
@@ -77,17 +76,11 @@ class PlayerSearch extends Player
         }
 
         // grid filtering conditions
-        $query->andFilterWhere([
-            'id' => $this->id,
-            // 'teamEvent.team.team' => $this->team_name,
-            // 'team_event_id' => $this->team_event_id,
-        ]);
 
-        //FIXME: search query for teamEvent.eventType.type and teamEvent.team.team
         $query->andFilterWhere(['like', 'name', $this->name])
-              ->andFilterWhere(['=', 'gender.gender', $this->gender_id])
-              ->andFilterWhere(['like', 'team', $this->team_name])
-              ->andFilterWhere(['like', 'type', $this->event_type_name]);
+              ->andFilterWhere(['like', 'gender.gender', $this->gender_id . '%', false])
+              ->andFilterWhere(['like', 'team', $this->team_name . '%', false])
+              ->andFilterWhere(['like', 'type', $this->event_type_name . '%', false]);
         return $dataProvider;
     }
 }
