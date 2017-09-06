@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\Player;
+use yii\db\Query;
 
 /**
  * PlayerSearch represents the model behind the search form of `common\models\Player`.
@@ -15,11 +16,14 @@ class PlayerSearch extends Player
     /**
      * @inheritdoc
      */
+    public $team_name;
+    public $event_type_name;
+
     public function rules()
     {
         return [
-            [['id', 'team_event_id', 'gender_id'], 'integer'],
-            [['name'], 'safe'],
+            [['id', 'team_event_id'], 'integer'],
+            [['name', 'gender_id', 'team_name', 'event_type_name'], 'safe'],
         ];
     }
 
@@ -42,12 +46,27 @@ class PlayerSearch extends Player
     public function search($params)
     {
         $query = Player::find();
-
         // add conditions that should always apply here
+
+        $query->joinWith('gender');
+        $query->joinWith('teamEvent');
+        $query->joinWith('team');
+        $query->joinWith('eventType');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+
+        //FIXME: sort for team name and event type name
+        $dataProvider->sort->attributes['team_name'] = [
+            'asc' => ['team' => SORT_ASC],
+            'desc' => ['team' => SORT_DESC],
+        ];
+
+        $dataProvider->sort->attributes['event_type_name'] = [
+            'asc' => ['type' => SORT_ASC],
+            'desc' => ['type' => SORT_DESC],
+        ];
 
         $this->load($params);
 
@@ -60,12 +79,15 @@ class PlayerSearch extends Player
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'team_event_id' => $this->team_event_id,
-            'gender_id' => $this->gender_id,
+            // 'teamEvent.team.team' => $this->team_name,
+            // 'team_event_id' => $this->team_event_id,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name]);
-
+        //FIXME: search query for teamEvent.eventType.type and teamEvent.team.team
+        $query->andFilterWhere(['like', 'name', $this->name])
+              ->andFilterWhere(['=', 'gender.gender', $this->gender_id])
+              ->andFilterWhere(['like', 'team', $this->team_name])
+              ->andFilterWhere(['like', 'type', $this->event_type_name]);
         return $dataProvider;
     }
 }

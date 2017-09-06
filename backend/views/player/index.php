@@ -18,17 +18,28 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('Create Player', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'team_event_id',
-            'gender_id',
             'name',
+            [
+                'label' => 'Gender',
+                'attribute' => 'gender_id',
+                'value' => 'gender.gender'
+            ],
+            [
+                'label' => 'Team',
+                'attribute' => 'team_name',
+                'value' => 'teamEvent.team.team'
+            ],
+            [
+                'label' => 'Event Type',
+                'attribute' => 'event_type_name',
+                'value' => 'teamEvent.eventType.type'
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

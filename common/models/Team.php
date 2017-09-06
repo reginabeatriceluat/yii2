@@ -39,7 +39,7 @@ class Team extends \yii\db\ActiveRecord
     {
         return [
             [['team', 'team_status_id', 'champ', 'first', 'second', 'wins', 'draws', 'losses', 'since'], 'required'],
-            [['team_status_id', 'champ', 'first', 'second', 'wins', 'draws', 'losses', 'rating'], 'integer'],
+            [['id', 'team_status_id', 'champ', 'first', 'second', 'wins', 'draws', 'losses', 'rating'], 'integer'],
             [['since', 'last_played'], 'safe'],
             [['team'], 'string', 'max' => 25],
             [['team'], 'unique'],

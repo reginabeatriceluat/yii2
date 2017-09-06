@@ -33,7 +33,7 @@ class EventType extends \yii\db\ActiveRecord
     {
         return [
             [['type', 'event_classification_id'], 'required'],
-            [['event_classification_id'], 'integer'],
+            [['id', 'event_classification_id'], 'integer'],
             [['type'], 'string', 'max' => 25],
             [['description'], 'string', 'max' => 250],
             [['type'], 'unique'],

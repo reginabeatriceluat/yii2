@@ -90,6 +90,14 @@ class TeamEvent extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getTeam()
+    {
+        return $this->hasOne(Team::className(), ['id' => 'team_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getEventType()
     {
         return $this->hasOne(EventType::className(), ['id' => 'event_type_id']);
