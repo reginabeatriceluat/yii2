@@ -18,8 +18,8 @@ class TeamSearch extends Team
     public function rules()
     {
         return [
-            [['id', 'team_status_id', 'champ', 'first', 'second', 'wins', 'draws', 'losses', 'rating'], 'integer'],
-            [['team', 'since', 'last_played'], 'safe'],
+            [['id', 'champ', 'first', 'second', 'wins', 'draws', 'losses', 'rating'], 'integer'],
+            [['team', 'team_status_id', 'since', 'last_played'], 'safe'],
         ];
     }
 
@@ -42,6 +42,7 @@ class TeamSearch extends Team
     public function search($params)
     {
         $query = Team::find();
+        $query->joinWith('teamStatus');
 
         // add conditions that should always apply here
 
@@ -60,7 +61,6 @@ class TeamSearch extends Team
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'team_status_id' => $this->team_status_id,
             'champ' => $this->champ,
             'first' => $this->first,
             'second' => $this->second,
@@ -68,11 +68,13 @@ class TeamSearch extends Team
             'draws' => $this->draws,
             'losses' => $this->losses,
             'rating' => $this->rating,
-            'since' => $this->since,
             'last_played' => $this->last_played,
         ]);
 
-        $query->andFilterWhere(['like', 'team', $this->team]);
+        $query->andFilterWhere(['like', 'team', $this->team . '%', false])
+              ->andFilterWhere(['like', 'status', $this->team_status_id . '%', false])
+              ->andFilterWhere(['like', 'since', $this->since . '%', false]);
+            //   ->andFilterWhere(['like', 'rating', $this->rating . '%', false]);
 
         return $dataProvider;
     }

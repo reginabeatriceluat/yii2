@@ -25,18 +25,22 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
+            // 'id',
             'team',
-            'team_status_id',
+            [
+                'label' => 'Team Status',
+                'attribute' => 'team_status_id',
+                'value' => 'teamStatus.status'
+            ],
             'champ',
             'first',
-            // 'second',
-            // 'wins',
-            // 'draws',
-            // 'losses',
-            // 'rating',
-            // 'since',
-            // 'last_played',
+            'second',
+            'wins',
+            'draws',
+            'losses',
+            'since',
+            'rating',
+            'last_played',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
