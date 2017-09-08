@@ -33,7 +33,7 @@ use kartik\select2\Select2;
         'pluginOptions' => [
             'allowClear' => true
         ],
-    ])->label('Team');
+    ])->label('Team Name');
     ?>
     <?= $form->field($eventType, 'id')->widget(Select2::classname(), [
         'data' => ArrayHelper::map(EventType::find()->orderBy('id')->all(),'id','type'),

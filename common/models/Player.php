@@ -48,7 +48,7 @@ class Player extends \yii\db\ActiveRecord
             'id' => 'ID',
             'team_event_id' => 'Team Event ID',
             'gender_id' => 'Gender ID',
-            'name' => 'Name',
+            'name' => 'Full Name',
         ];
     }
 

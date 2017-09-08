@@ -31,7 +31,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => 'gender.gender'
             ],
             [
-                'label' => 'Team',
                 'attribute' => 'team_name',
                 'value' => 'team.team'
             ],

@@ -48,7 +48,7 @@ class EventType extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'type' => 'Type',
+            'type' => 'Event Type',
             'description' => 'Description',
             'event_classification_id' => 'Event Classification ID',
         ];
