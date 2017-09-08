@@ -76,11 +76,22 @@ class PlayerSearch extends Player
         }
 
         // grid filtering conditions
+<<<<<<< HEAD
 
         $query->andFilterWhere(['like', 'name', $this->name])
               ->andFilterWhere(['like', 'gender.gender', $this->gender_id . '%', false])
               ->andFilterWhere(['like', 'team', $this->team_name . '%', false])
               ->andFilterWhere(['like', 'type', $this->event_type_name . '%', false]);
+=======
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'gender.gender' =>  $this->gender_id,
+        ]);
+
+        $query->andFilterWhere(['like', 'name', $this->name])
+              ->andFilterWhere(['like', 'team', $this->team_name])
+              ->andFilterWhere(['like', 'type', $this->event_type_name]);
+>>>>>>> d6d6e114c799a9c3615d99dc13a90babedd131c9
         return $dataProvider;
     }
 }
