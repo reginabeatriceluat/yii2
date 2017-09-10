@@ -18,7 +18,7 @@ class VenueSearch extends Venue
     public function rules()
     {
         return [
-            [['id', 'location_id'], 'integer'],
+            [['id'], 'integer'],
             [['venue', 'description'], 'safe'],
         ];
     }
@@ -60,7 +60,6 @@ class VenueSearch extends Venue
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'location_id' => $this->location_id,
         ]);
 
         $query->andFilterWhere(['like', 'venue', $this->venue])

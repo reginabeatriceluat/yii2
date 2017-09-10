@@ -10,10 +10,8 @@ use Yii;
  * @property string $id
  * @property string $venue
  * @property string $description
- * @property int $location_id
  *
  * @property LocationVenue[] $locationVenues
- * @property Location $location
  */
 class Venue extends \yii\db\ActiveRecord
 {
@@ -31,11 +29,9 @@ class Venue extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['venue', 'location_id'], 'required'],
-            [['location_id'], 'integer'],
+            [['venue'], 'required'],
             [['venue'], 'string', 'max' => 25],
             [['description'], 'string', 'max' => 250],
-            [['location_id'], 'exist', 'skipOnError' => true, 'targetClass' => Location::className(), 'targetAttribute' => ['location_id' => 'id']],
         ];
     }
 
@@ -48,7 +44,6 @@ class Venue extends \yii\db\ActiveRecord
             'id' => 'ID',
             'venue' => 'Venue',
             'description' => 'Description',
-            'location_id' => 'Location ID',
         ];
     }
 
@@ -58,13 +53,5 @@ class Venue extends \yii\db\ActiveRecord
     public function getLocationVenues()
     {
         return $this->hasMany(LocationVenue::className(), ['venue_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getLocation()
-    {
-        return $this->hasOne(Location::className(), ['id' => 'location_id']);
     }
 }
