@@ -6,7 +6,6 @@ use Yii;
 use common\models\Player;
 use common\models\EventType;
 use common\models\Team;
-use common\models\TeamEvent;
 use backend\models\PlayerSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -106,12 +105,8 @@ class PlayerController extends Controller
         $eventType = new EventType();
         $team = new Team();
 
-        $eventType->id = Yii::$app->db->
-            createCommand('SELECT id FROM event_type WHERE id = ' . $model->teamEvent->event_type_id)
-        ->queryScalar();
-        $team->id = Yii::$app->db->
-            createCommand('SELECT id FROM team WHERE id = ' . $model->teamEvent->team_id)
-        ->queryScalar();
+        $eventType->id = $model->teamEvent->event_type_id;
+        $team->id = $model->teamEvent->team_id;
 
         if ($model->load(Yii::$app->request->post()) &&
         $eventType->load(Yii::$app->request->post()) &&
