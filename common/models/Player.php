@@ -31,7 +31,8 @@ class Player extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['team_event_id', 'gender_id', 'name'], 'required'],
+            [['gender_id'], 'required', 'message' => 'Please select a Gender.'],
+            [['team_event_id', 'name'], 'required'],
             [['team_event_id', 'gender_id'], 'integer'],
             [['name'], 'string', 'max' => 100],
             [['gender_id'], 'exist', 'skipOnError' => true, 'targetClass' => Gender::className(), 'targetAttribute' => ['gender_id' => 'id']],
@@ -61,6 +62,8 @@ class Player extends \yii\db\ActiveRecord
     }
 
     /**
+     * 
+     */
      * @return \yii\db\ActiveQuery
      */
     public function getTeamEvent()
