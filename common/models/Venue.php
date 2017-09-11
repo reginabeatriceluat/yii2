@@ -29,6 +29,7 @@ class Venue extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['id'], 'required', 'message' => 'Please select a Venue.'],
             [['venue'], 'required'],
             [['venue'], 'string', 'max' => 25],
             [['description'], 'string', 'max' => 250],

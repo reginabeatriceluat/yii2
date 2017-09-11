@@ -29,6 +29,7 @@ class Order extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['id'], 'required', 'message' => 'Please select an Order Type.'],
             [['order'], 'required'],
             [['order'], 'string', 'max' => 25],
             [['description'], 'string', 'max' => 250],

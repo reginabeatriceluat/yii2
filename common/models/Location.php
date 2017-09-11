@@ -31,6 +31,7 @@ class Location extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['id'], 'required', 'message' => 'Please select a Location.'],
             [['location'], 'required'],
             [['location'], 'string', 'max' => 25],
             [['address', 'description'], 'string', 'max' => 250],
