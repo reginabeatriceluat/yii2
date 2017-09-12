@@ -15,11 +15,14 @@ class EventSearch extends Event
     /**
      * @inheritdoc
      */
+     public $location_name;
+     public $venue_name;
+
     public function rules()
     {
         return [
-            [['id', 'occasion_id', 'location_venue_id', 'event_type_id', 'event_category_id', 'event_status_id', 'match_system_id', 'sort_id', 'min_team', 'max_team', 'champ', 'first', 'second'], 'integer'],
-            [['event', 'description', 'date_start', 'date_end'], 'safe'],
+            [['id'], 'integer'],
+            [['occasion_id', 'location_venue_id', 'event_type_id', 'sort_order_id', 'min_team', 'max_team', 'champ', 'first', 'second', 'event', 'description', 'date_start', 'date_end', 'location_name', 'venue_name', 'event_category_id', 'event_status_id', 'match_system_id'], 'safe'],
         ];
     }
 
@@ -42,12 +45,28 @@ class EventSearch extends Event
     public function search($params)
     {
         $query = Event::find();
+        $query->joinWith('occasion');
+        $query->joinWith('location');
+        $query->joinWith('venue');
+        $query->joinWith('eventCategory');
+        $query->joinWith('eventStatus');
+        $query->joinWith('matchSystem');
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+
+        $dataProvider->sort->attributes['location_name'] = [
+            'asc' => ['location' => SORT_ASC],
+            'desc' => ['location' => SORT_DESC],
+        ];
+
+        $dataProvider->sort->attributes['venue_name'] = [
+            'asc' => ['venue' => SORT_ASC],
+            'desc' => ['venue' => SORT_DESC],
+        ];
 
         $this->load($params);
 
@@ -60,24 +79,23 @@ class EventSearch extends Event
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'occasion_id' => $this->occasion_id,
-            'location_venue_id' => $this->location_venue_id,
-            'event_type_id' => $this->event_type_id,
-            'event_category_id' => $this->event_category_id,
-            'event_status_id' => $this->event_status_id,
-            'match_system_id' => $this->match_system_id,
-            'sort_id' => $this->sort_id,
             'min_team' => $this->min_team,
             'max_team' => $this->max_team,
-            'champ' => $this->champ,
-            'first' => $this->first,
-            'second' => $this->second,
-            'date_start' => $this->date_start,
-            'date_end' => $this->date_end,
+            // 'event.champ' => $this->champ,
+            // 'event.first' => $this->first,
+            // 'event.second' => $this->second,
+            'event.date_start' => $this->date_start,
+            'event.date_end' => $this->date_end,
         ]);
 
-        $query->andFilterWhere(['like', 'event', $this->event])
-            ->andFilterWhere(['like', 'description', $this->description]);
+        $query->andFilterWhere(['like', 'event.event', $this->event])
+            ->andFilterWhere(['like', 'event.description', $this->description])
+            ->andFilterWhere(['like', 'occasion', $this->occasion_id])
+            ->andFilterWhere(['like', 'location', $this->location_name])
+            ->andFilterWhere(['like', 'venue', $this->venue_name])
+            ->andFilterWhere(['like', 'category', $this->event_category_id . '%', false])
+            ->andFilterWhere(['like', 'status', $this->event_status_id . '%', false])
+            ->andFilterWhere(['like', 'system', $this->match_system_id . '%', false]);
 
         return $dataProvider;
     }
