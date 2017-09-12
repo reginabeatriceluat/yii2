@@ -11,7 +11,7 @@ use Yii;
  * @property string $order
  * @property string $description
  *
- * @property Sort[] $sorts
+ * @property SortOrder[] $sortOrders
  */
 class Order extends \yii\db\ActiveRecord
 {
@@ -52,8 +52,8 @@ class Order extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getSorts()
+    public function getSortOrders()
     {
-        return $this->hasMany(Sort::className(), ['order_id' => 'id']);
+        return $this->hasMany(SortOrder::className(), ['order_id' => 'id']);
     }
 }
