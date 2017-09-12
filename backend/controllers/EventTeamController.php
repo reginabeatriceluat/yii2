@@ -8,7 +8,6 @@ use backend\models\EventTeamSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
 /**
  * EventTeamController implements the CRUD actions for EventTeam model.
  */
@@ -64,8 +63,13 @@ class EventTeamController extends Controller
     public function actionCreate()
     {
         $model = new EventTeam();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            $model->team_event_id = Yii::$app->db->
+                createCommand('SELECT id FROM team_event WHERE team_id =' . $model->team_name . ' and event_type_id =' . $model->event_type_name)
+            ->queryScalar();
+            //TODO: check event type on both event & team_event table
+            $model->event_team_status_id = 1;
+            $model->save(false);
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -83,6 +87,8 @@ class EventTeamController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $model->team_name = $model->teamEvent->team_id;
+        $model->event_type_name = $model->teamEvent->event_type_id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);

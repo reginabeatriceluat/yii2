@@ -15,10 +15,13 @@ class EventTeamSearch extends EventTeam
     /**
      * @inheritdoc
      */
+    public $event_type_name;
+    public $team_name;
     public function rules()
     {
         return [
-            [['id', 'event_id', 'team_event_id', 'event_team_status_id', 'team_order', 'total_wins', 'total_draws', 'total_loss'], 'integer'],
+            [['id', 'team_event_id', 'team_order', 'total_wins', 'total_draws', 'total_loss'], 'integer'],
+            [['event_id', 'event_team_status_id', 'team_name', 'event_type_name'], 'safe']
         ];
     }
 
@@ -41,12 +44,25 @@ class EventTeamSearch extends EventTeam
     public function search($params)
     {
         $query = EventTeam::find();
+        $query->joinWith('eventTeamStatus');
+        $query->joinWith('team');
+        $query->joinWith('eventType');
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+
+        $dataProvider->sort->attributes['team_name'] = [
+            'asc' => ['team' => SORT_ASC],
+            'desc' => ['team' => SORT_DESC],
+        ];
+
+        $dataProvider->sort->attributes['event_type_name'] = [
+            'asc' => ['type' => SORT_ASC],
+            'desc' => ['type' => SORT_DESC],
+        ];
 
         $this->load($params);
 
@@ -58,16 +74,19 @@ class EventTeamSearch extends EventTeam
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
-            'event_id' => $this->event_id,
-            'team_event_id' => $this->team_event_id,
-            'event_team_status_id' => $this->event_team_status_id,
-            'team_order' => $this->team_order,
+            // 'event_id' => $this->event_id,
+            // 'team_event_id' => $this->team_event_id,
+            // 'event_team_status_id' => $this->event_team_status_id,
+            // 'team_order' => $this->team_order,
             'total_wins' => $this->total_wins,
             'total_draws' => $this->total_draws,
             'total_loss' => $this->total_loss,
         ]);
 
+        $query->andFilterWhere(['like', 'event', $this->event_id])
+            ->andFilterWhere(['like', 'team', $this->team_name])
+            ->andFilterWhere(['like', 'type', $this->event_type_name])
+            ->andFilterWhere(['like', 'status', $this->event_team_status_id . '%', false]);
         return $dataProvider;
     }
 }
