@@ -25,23 +25,47 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'occasion_id',
-            'location_venue_id',
-            'event_type_id',
+            // 'id',
             'event',
-            // 'description',
-            // 'event_category_id',
-            // 'event_status_id',
-            // 'match_system_id',
-            // 'sort_id',
+            'description',
+            [
+                'label' => 'Occasion',
+                'attribute' => 'occasion_id',
+                'value' => 'occasion.occasion'
+            ],
+            [
+                'label' => 'Location',
+                'attribute' => 'location_name',
+                'value' => 'location.location'
+            ],
+            [
+                'label' => 'Venue',
+                'attribute' => 'venue_name',
+                'value' => 'venue.venue'
+            ],
+            [
+                'label' => 'Category',
+                'attribute' => 'event_category_id',
+                'value' => 'eventCategory.category'
+            ],
+            [
+                'label' => 'Status',
+                'attribute' => 'event_status_id',
+                'value' => 'eventCategory.category'
+            ],
+            [
+                'label' => 'Match System',
+                'attribute' => 'match_system_id',
+                'value' => 'matchSystem.system'
+            ],
+            // 'sort_order_id',
             // 'min_team',
             // 'max_team',
             // 'champ',
             // 'first',
             // 'second',
-            // 'date_start',
-            // 'date_end',
+            'date_start',
+            'date_end',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

@@ -16,7 +16,7 @@ use Yii;
  * @property int $event_category_id
  * @property int $event_status_id
  * @property int $match_system_id
- * @property int $sort_id
+ * @property int $sort_order_id
  * @property int $min_team
  * @property int $max_team
  * @property string $champ
@@ -31,7 +31,7 @@ use Yii;
  * @property EventStatus $eventStatus
  * @property LocationVenue $locationVenue
  * @property MatchSystem $matchSystem
- * @property Sort $sort
+ * @property SortOrder $sortOrder
  * @property EventRound[] $eventRounds
  * @property EventTeam[] $eventTeams
  */
@@ -51,8 +51,8 @@ class Event extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['occasion_id', 'location_venue_id', 'event_type_id', 'event', 'event_category_id', 'event_status_id', 'match_system_id', 'sort_id', 'min_team', 'max_team', 'champ', 'first', 'second', 'date_start', 'date_end'], 'required'],
-            [['occasion_id', 'location_venue_id', 'event_type_id', 'event_category_id', 'event_status_id', 'match_system_id', 'sort_id', 'min_team', 'max_team', 'champ', 'first', 'second'], 'integer'],
+            [['occasion_id', 'location_venue_id', 'event_type_id', 'event', 'event_category_id', 'event_status_id', 'match_system_id', 'sort_order_id', 'min_team', 'max_team'], 'required'],
+            [['occasion_id', 'location_venue_id', 'event_type_id', 'event_category_id', 'event_status_id', 'match_system_id', 'sort_order_id', 'min_team', 'max_team', 'champ', 'first', 'second'], 'integer'],
             [['date_start', 'date_end'], 'safe'],
             [['event'], 'string', 'max' => 100],
             [['description'], 'string', 'max' => 250],
@@ -62,7 +62,7 @@ class Event extends \yii\db\ActiveRecord
             [['event_status_id'], 'exist', 'skipOnError' => true, 'targetClass' => EventStatus::className(), 'targetAttribute' => ['event_status_id' => 'id']],
             [['location_venue_id'], 'exist', 'skipOnError' => true, 'targetClass' => LocationVenue::className(), 'targetAttribute' => ['location_venue_id' => 'id']],
             [['match_system_id'], 'exist', 'skipOnError' => true, 'targetClass' => MatchSystem::className(), 'targetAttribute' => ['match_system_id' => 'id']],
-            [['sort_id'], 'exist', 'skipOnError' => true, 'targetClass' => Sort::className(), 'targetAttribute' => ['sort_id' => 'id']],
+            [['sort_order_id'], 'exist', 'skipOnError' => true, 'targetClass' => SortOrder::className(), 'targetAttribute' => ['sort_order_id' => 'id']],
         ];
     }
 
@@ -81,7 +81,7 @@ class Event extends \yii\db\ActiveRecord
             'event_category_id' => 'Event Category ID',
             'event_status_id' => 'Event Status ID',
             'match_system_id' => 'Match System ID',
-            'sort_id' => 'Sort ID',
+            'sort_order_id' => 'Sort Order ID',
             'min_team' => 'Min Team',
             'max_team' => 'Max Team',
             'champ' => 'Champ',
@@ -132,6 +132,19 @@ class Event extends \yii\db\ActiveRecord
         return $this->hasOne(LocationVenue::className(), ['id' => 'location_venue_id']);
     }
 
+    public function getLocation()
+    {
+
+        return $this->hasOne(Location::className(), ['id' => 'location_id'])
+                    ->via('locationVenue');
+    }
+
+    public function getVenue()
+    {
+        return $this->hasOne(Venue::className(), ['id' => 'venue_id'])
+                    ->via('locationVenue');
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -143,9 +156,9 @@ class Event extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getSort()
+    public function getSortOrder()
     {
-        return $this->hasOne(Sort::className(), ['id' => 'sort_id']);
+        return $this->hasOne(SortOrder::className(), ['id' => 'sort_order_id']);
     }
 
     /**
