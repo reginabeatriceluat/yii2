@@ -51,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'label' => 'Status',
                 'attribute' => 'event_status_id',
-                'value' => 'eventCategory.category'
+                'value' => 'eventStatus.status'
             ],
             [
                 'label' => 'Match System',
