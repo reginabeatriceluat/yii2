@@ -32,7 +32,6 @@ class EventType extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id'], 'required', 'message' => 'Please select an Event Type.'],
             [['type', 'event_classification_id'], 'required'],
             [['event_classification_id'], 'integer'],
             [['type'], 'string', 'max' => 25],

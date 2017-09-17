@@ -16,15 +16,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $this->render('_form', [
         'model' => $model,
-        'occasion' => $occasion,
-        'location' => $location,
-        'venue' => $venue,
-        'eventType' => $eventType,
-        'eventCategory' => $eventCategory,
-        // 'eventStatus' => $eventStatus,
-        'matchSystem' => $matchSystem,
-        'sort' => $sort,
-        'order' => $order,
     ]) ?>
 
 </div>

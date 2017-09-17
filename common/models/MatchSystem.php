@@ -29,7 +29,6 @@ class MatchSystem extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id'], 'required', 'message' => 'Please select a Match System.'],
             [['system'], 'required'],
             [['system'], 'string', 'max' => 25],
             [['description'], 'string', 'max' => 250],

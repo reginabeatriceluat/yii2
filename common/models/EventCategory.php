@@ -29,7 +29,6 @@ class EventCategory extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id'], 'required', 'message' => 'Please select an Event Category.'],
             [['category'], 'required'],
             [['category'], 'string', 'max' => 25],
             [['description'], 'string', 'max' => 250],

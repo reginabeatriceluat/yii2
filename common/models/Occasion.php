@@ -30,7 +30,6 @@ class Occasion extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id'], 'required', 'message' => 'Please select an Occasion.'],
             [['occasion', 'date_start'], 'required'],
             [['date_start'], 'safe'],
             [['occasion'], 'string', 'max' => 25],

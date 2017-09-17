@@ -29,7 +29,6 @@ class Sort extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id'], 'required', 'message' => 'Please select a Sort type.'],
             [['sort'], 'required'],
             [['sort'], 'string', 'max' => 25],
             [['description'], 'string', 'max' => 250],

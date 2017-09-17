@@ -4,15 +4,6 @@ namespace backend\controllers;
 
 use Yii;
 use common\models\Event;
-use common\models\Occasion;
-use common\models\Location;
-use common\models\Venue;
-use common\models\EventType;
-use common\models\EventCategory;
-use common\models\EventStatus;
-use common\models\MatchSystem;
-use common\models\Sort;
-use common\models\Order;
 use backend\models\EventSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -73,34 +64,18 @@ class EventController extends Controller
     public function actionCreate()
     {
         $model = new Event();
-        $occasion = new Occasion();
-        $location = new Location();
-        $venue = new Venue();
-        $eventType = new EventType();
-        $eventCategory = new EventCategory();
-        $matchSystem = new MatchSystem();
-        $sort = new Sort();
-        $order = new Order();
 
-        if ($model->load(Yii::$app->request->post()) &&
-            $occasion->load(Yii::$app->request->post()) &&
-            $location->load(Yii::$app->request->post()) &&
-            $venue->load(Yii::$app->request->post()) &&
-            $eventType->load(Yii::$app->request->post()) &&
-            $eventCategory->load(Yii::$app->request->post()) &&
-            $matchSystem->load(Yii::$app->request->post()) &&
-            $sort->load(Yii::$app->request->post()) &&
-            $order->load(Yii::$app->request->post())) {
+        if ($model->load(Yii::$app->request->post())) {
 
-            $model->occasion_id = $occasion->id;
+            $model->occasion_id = $model->occasion_dd;
             $model->location_venue_id = Yii::$app->db->
-                createCommand('SELECT id FROM location_venue WHERE location_id =' . $location->id . ' and venue_id =' . $venue->id)
+                createCommand('SELECT id FROM location_venue WHERE location_id =' . $model_location_dd . ' and venue_id =' . $model->venue_dd)
             ->queryScalar();
-            $model->event_type_id = $eventType->id;
-            $model->event_category_id = $eventCategory->id;
-            $model->match_system_id = $matchSystem->id;
+            $model->event_type_id = $model->event_type_dd;
+            $model->event_category_id = $model->event_category_dd;
+            $model->match_system_id = $model->match_system_dd;
             $model->sort_order_id =  Yii::$app->db->
-                createCommand('SELECT id FROM sort_order WHERE sort_id =' . $sort->id . ' and order_id =' . $order->id)
+                createCommand('SELECT id FROM sort_order WHERE sort_id =' . $model->sort_dd . ' and order_id =' . $model->order_dd)
             ->queryScalar();
             $model->event_status_id = 1;
             $model->min_team = 2;
@@ -116,14 +91,6 @@ class EventController extends Controller
         } else {
             return $this->render('create', [
                 'model' => $model,
-                'occasion' => $occasion,
-                'location' => $location,
-                'venue' => $venue,
-                'eventType' => $eventType,
-                'eventCategory' => $eventCategory,
-                'matchSystem' => $matchSystem,
-                'sort' => $sort,
-                'order' => $order,
             ]);
         }
     }
@@ -137,48 +104,28 @@ class EventController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $occasion = new Occasion();
-        $location = new Location();
-        $venue = new Venue();
-        $eventType = new EventType();
-        $eventCategory = new EventCategory();
-        // $eventStatus = new EventStatus();
-        $matchSystem = new MatchSystem();
-        $sort = new Sort();
-        $order = new Order();
 
-
-        $occasion->id = $model->occasion_id;
-        $location->id = $model->locationVenue->location_id;
-        $venue->id = $model->locationVenue->venue_id;
-        $eventType->id = $model->event_type_id;
+        $model->occasion_dd = $model->occasion_id;
+        $model->location_dd = $model->locationVenue->location_id;
+        $model->venue_dd = $model->locationVenue->venue_id;
+        $model->event_type_dd = $model->event_type_id;
         // $eventStatus->id = $model->event_status_id;
-        $eventCategory->id = $model->event_category_id;
-        $matchSystem->id = $model->match_system_id;
-        $sort->id = $model->sortOrder->sort_id;
-        $order->id = $model->sortOrder->order_id;
+        $model->event_category_dd = $model->event_category_id;
+        $model->match_system_dd = $model->match_system_id;
+        $model->sort_dd = $model->sortOrder->sort_id;
+        $model->order_dd = $model->sortOrder->order_id;
 
-        if ($model->load(Yii::$app->request->post()) &&
-            $occasion->load(Yii::$app->request->post()) &&
-            $location->load(Yii::$app->request->post()) &&
-            $venue->load(Yii::$app->request->post()) &&
-            $eventType->load(Yii::$app->request->post()) &&
-            $eventCategory->load(Yii::$app->request->post()) &&
-            // $eventStatus->load(Yii::$app->request->post()) &&
-            $matchSystem->load(Yii::$app->request->post()) &&
-            $sort->load(Yii::$app->request->post()) &&
-            $order->load(Yii::$app->request->post())) {
-
-            $model->occasion_id = $occasion->id;
+        if ($model->load(Yii::$app->request->post())) {
+            $model->occasion_id = $model->occasion_dd;
             $model->location_venue_id = Yii::$app->db->
-                createCommand('SELECT id FROM location_venue WHERE location_id =' . $location->id . ' and venue_id =' . $venue->id)
+                createCommand('SELECT id FROM location_venue WHERE location_id =' . $model->location_dd . ' and venue_id =' . $model->venue_dd)
             ->queryScalar();
-            $model->event_type_id =  $eventType->id;
-            $model->event_category_id = $eventCategory->id;
+            $model->event_type_id =  $model->event_type_dd;
+            $model->event_category_id = $model->event_category_dd;
             // $model->event_status_id = $eventStatus->id;
-            $model->match_system_id = $matchSystem->id;
+            $model->match_system_id = $model->match_system_dd;
             $model->sort_order_id = Yii::$app->db->
-                createCommand('SELECT id FROM sort_order WHERE sort_id =' . $sort->id . ' and order_id =' . $order->id)
+                createCommand('SELECT id FROM sort_order WHERE sort_id =' . $model->sort_dd . ' and order_id =' . $model->order_dd)
             ->queryScalar();
 
             $model->save();
@@ -186,15 +133,6 @@ class EventController extends Controller
         } else {
             return $this->render('update', [
                 'model' => $model,
-                'occasion' => $occasion,
-                'location' => $location,
-                'venue' => $venue,
-                'eventType' => $eventType,
-                'eventCategory' => $eventCategory,
-                // 'eventStatus' => $eventStatus,
-                'matchSystem' => $matchSystem,
-                'sort' => $sort,
-                'order' => $order,
             ]);
         }
     }
@@ -228,23 +166,4 @@ class EventController extends Controller
         }
     }
 
-    public function actionVenue() {
-        $out = [];
-        if (isset($_POST['depdrop_parents'])) {
-            $parents = $_POST['depdrop_parents'];
-            if ($parents != null) {
-                $cat_id = $parents[0];
-                $out = self::getSubCatList($cat_id);
-                // the getSubCatList function will query the database based on the
-                // cat_id and return an array like below:
-                // [
-                //    ['id'=>'<sub-cat-id-1>', 'name'=>'<sub-cat-name1>'],
-                //    ['id'=>'<sub-cat_id_2>', 'name'=>'<sub-cat-name2>']
-                // ]
-                echo Json::encode(['output'=>$out, 'selected'=>'']);
-                return;
-            }
-        }
-        echo Json::encode(['output'=>'', 'selected'=>'']);
-    }
 }

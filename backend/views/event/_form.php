@@ -22,7 +22,7 @@ use kartik\select2\Select2;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($occasion, 'id')->widget(Select2::classname(), [
+    <?= $form->field($model, 'occasion_dd')->widget(Select2::classname(), [
         'data' => ArrayHelper::map(Occasion::find()->orderBy('id')->all(),'id','occasion'),
         'language' => 'en',
         'options' => ['placeholder' => 'Select Occasion'],
@@ -31,7 +31,7 @@ use kartik\select2\Select2;
         ],
     ])->label('Occasion');
     ?>
-    <?= $form->field($location, 'id')->widget(Select2::classname(), [
+    <?= $form->field($model, 'location_dd')->widget(Select2::classname(), [
         'data' => ArrayHelper::map(Location::find()->orderBy('id')->all(),'id','location'),
         'language' => 'en',
         'options' => ['placeholder' => 'Select Location'],
@@ -41,7 +41,7 @@ use kartik\select2\Select2;
     ])->label('Location');
     ?>
     <!-- TODO: make venue field dropdown dependent to location -->
-    <?= $form->field($venue, 'id')->widget(Select2::classname(), [
+    <?= $form->field($model, 'venue_dd')->widget(Select2::classname(), [
         'data' => ArrayHelper::map(Venue::find()->orderBy('id')->all(),'id','venue'),
         'language' => 'en',
         'options' => ['placeholder' => 'Select Venue'],
@@ -54,7 +54,7 @@ use kartik\select2\Select2;
 
     <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($eventType, 'id')->widget(Select2::classname(), [
+    <?= $form->field($model, 'event_type_dd')->widget(Select2::classname(), [
         'data' => ArrayHelper::map(EventType::find()->orderBy('id')->all(),'id','type'),
         'language' => 'en',
         'options' => ['placeholder' => 'Select Event Type'],
@@ -64,7 +64,7 @@ use kartik\select2\Select2;
         ])->label('Event Type');
     ?>
 
-    <?= $form->field($eventCategory, 'id')->widget(Select2::classname(), [
+    <?= $form->field($model, 'event_category_dd')->widget(Select2::classname(), [
         'data' => ArrayHelper::map(EventCategory::find()->orderBy('id')->all(),'id','category'),
         'language' => 'en',
         'options' => ['placeholder' => 'Select Category'],
@@ -75,7 +75,7 @@ use kartik\select2\Select2;
     ?>
 
 
-    <?= $form->field($matchSystem, 'id')->widget(Select2::classname(), [
+    <?= $form->field($model, 'match_system_dd')->widget(Select2::classname(), [
         'data' => ArrayHelper::map(MatchSystem::find()->orderBy('id')->all(),'id','system'),
         'language' => 'en',
         'options' => ['placeholder' => 'Select System'],
@@ -85,7 +85,7 @@ use kartik\select2\Select2;
         ])->label('Match System');
     ?>
 
-    <?= $form->field($sort, 'id')->widget(Select2::classname(), [
+    <?= $form->field($model, 'sort_dd')->widget(Select2::classname(), [
         'data' => ArrayHelper::map(Sort::find()->orderBy('id')->all(),'id','sort'),
         'language' => 'en',
         'options' => ['placeholder' => 'Select Sort Type'],
@@ -96,7 +96,7 @@ use kartik\select2\Select2;
     ?>
 
     <!--TODO: make order field dropdown dependent to sort -->
-    <?= $form->field($order, 'id')->widget(Select2::classname(), [
+    <?= $form->field($model, 'order_dd')->widget(Select2::classname(), [
         'data' => ArrayHelper::map(Order::find()->orderBy('id')->all(),'id','order'),
         'language' => 'en',
         'options' => ['placeholder' => 'Select Order Type'],

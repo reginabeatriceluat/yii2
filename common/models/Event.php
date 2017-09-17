@@ -48,9 +48,25 @@ class Event extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+     public $event_category_dd;
+     public $event_type_dd;
+     public $location_dd;
+     public $match_system_dd;
+     public $occasion_dd;
+     public $order_dd;
+     public $sort_dd;
+     public $venue_dd;
     public function rules()
     {
         return [
+            [['event_category_dd'], 'required', 'message' => 'Please select an Event Category.'],
+            [['event_type_dd'], 'required', 'message' => 'Please select an Event Type.'],
+            [['location_dd'], 'required', 'message' => 'Please select a Location.'],
+            [['match_system_dd'], 'required', 'message' => 'Please select a Match System.'],
+            [['occasion_dd'], 'required', 'message' => 'Please select an Occasion.'],
+            [['order_dd'], 'required', 'message' => 'Please select an Order Type.'],
+            [['sort_dd'], 'required', 'message' => 'Please select a Sort type.'],
+            [['venue_dd'], 'required', 'message' => 'Please select a Venue.'],
             [['occasion_id', 'location_venue_id', 'event_type_id', 'event', 'event_category_id', 'event_status_id', 'match_system_id', 'sort_order_id', 'min_team', 'max_team'], 'required'],
             [['occasion_id', 'location_venue_id', 'event_type_id', 'event_category_id', 'event_status_id', 'match_system_id', 'sort_order_id', 'min_team', 'max_team', 'champ', 'first', 'second'], 'integer'],
             [['date_start', 'date_end'], 'safe'],

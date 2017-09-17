@@ -17,12 +17,13 @@ class EventSearch extends Event
      */
      public $location_name;
      public $venue_name;
+     public $occasion_name;
 
     public function rules()
     {
         return [
             [['id'], 'integer'],
-            [['occasion_id', 'location_venue_id', 'event_type_id', 'sort_order_id', 'min_team', 'max_team', 'champ', 'first', 'second', 'event', 'description', 'date_start', 'date_end', 'location_name', 'venue_name', 'event_category_id', 'event_status_id', 'match_system_id'], 'safe'],
+            [['occasion_name', 'location_venue_id', 'event_type_id', 'sort_order_id', 'min_team', 'max_team', 'champ', 'first', 'second', 'event', 'description', 'date_start', 'date_end', 'location_name', 'venue_name', 'event_category_id', 'event_status_id', 'match_system_id'], 'safe'],
         ];
     }
 
@@ -58,6 +59,11 @@ class EventSearch extends Event
             'query' => $query,
         ]);
 
+        $dataProvider->sort->attributes['occasion_name'] = [
+            'asc' => ['location' => SORT_ASC],
+            'desc' => ['location' => SORT_DESC],
+        ];
+
         $dataProvider->sort->attributes['location_name'] = [
             'asc' => ['location' => SORT_ASC],
             'desc' => ['location' => SORT_DESC],
@@ -90,7 +96,7 @@ class EventSearch extends Event
 
         $query->andFilterWhere(['like', 'event.event', $this->event])
             ->andFilterWhere(['like', 'event.description', $this->description])
-            ->andFilterWhere(['like', 'occasion', $this->occasion_id])
+            ->andFilterWhere(['like', 'occasion', $this->occasion_name])
             ->andFilterWhere(['like', 'location', $this->location_name])
             ->andFilterWhere(['like', 'venue', $this->venue_name])
             ->andFilterWhere(['like', 'category', $this->event_category_id . '%', false])

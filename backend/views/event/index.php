@@ -30,8 +30,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'description',
             [
                 'label' => 'Occasion',
-                'attribute' => 'occasion_id',
-                'value' => 'occasion.occasion'
+                'attribute' => 'occasion_name',
+                'value' => 'occasion.occasion',
             ],
             [
                 'label' => 'Location',
@@ -66,8 +66,15 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'second',
             'date_start',
             'date_end',
-
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{myButton} {view} {update} {delete}',
+                'buttons' => [
+                    'myButton' => function($url, $model, $key) {     // render your custom button
+                        return Html::a('Finalize', ['finalize', 'id' => $model->id], ['class' => 'btn btn-success btn-xs', 'data-pjax' => 0]);
+                    }
+                ]
+            ],
         ],
     ]); ?>
 </div>
